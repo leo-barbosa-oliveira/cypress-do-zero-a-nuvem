@@ -1,0 +1,74 @@
+cy.visit() --> visita uma url 
+cy.visit('https://www.google.com.br')
+
+acessar um arquivo local no computador com cy.visit()
+cy.visit('../../nomeDoArquivo.html')
+
+
+describe('Central de Atendimento ao Cliente TAT', () => {
+  it('verifica o título da aplicação', () => {
+
+  })
+})
+O bloco describe define a suite de testes e o bloco it define o caso de teste.
+
+/////////////////// EXERCICIO 1 //////////////////////////////////////
+
+describe('Central de Atendimento ao Cliente TAT', () => {
+  it('verifica o título da aplicação ', () => {
+    cy.visit('./src/index.html')//visitando a página
+
+    //cy.title() --> buscando o titulo da aplicação
+    //.should('be.equal') --> encadeando ao title o should pra verificiar se aparece o que queremos
+    cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT');
+
+  })
+})
+
+// .click() faz click em elementos no DOM
+
+// .type() faz a digitação dentro de um campo
+
+// cy.get(seletor) --> busca elemento do dom
+// Maneira mais comum de usar o cy.get('[data-teste = "avatar"]')
+
+//Encadeamento de comandos 
+//cy.get().type()
+//cy.get().click()
+
+//Encadeiando comandos 
+cy.get('input[type="text"]') --> busco elemento
+  .type('Olá mundo!') --> digitou um elemento
+  .should('have.value', 'Olá mundo!') --> faz a verificação do elemento
+
+//Verificações intermediarias (antes de digitar num campo verificar se ele está visivel)
+cy.get('input[type="text"]') --> busco elemento
+  .should('be.visible')--> verificar que o elemento que vai receber uma digitação está visivel
+  .type('Olá mundo!') --> digitou um elemento
+  .should('have.value', 'Olá mundo!') --> faz a verificação do elemento
+
+// uso correto é digita digita e verifica
+    cy.get().type()
+    cy.get().type()
+    cy.get().should()
+
+// Uso incorreto 
+    cy.get()
+    .type()
+    .type()
+    .should()
+
+//pegar um elemento e dar um apelido e a forma correta de digitar o código só usando comandos de query sendo retentados
+cy.get('input[type="text"]')
+    .as('textfield') --> dei o nome de textfield pra não precisar repetir o seletor todo
+    .should('be.visible') --> verifico se esta visivel
+    .type('Olá mundo!') --> type como ultimo comando da cadeia não posso usar um should tenho qque chamar o get de novo
+cy.get('@textField') --> chamo o get aqui de novo usando @nome do alias @textfield
+    .should('have.value', 'Olá mundo!') --> então faz a verificação final 
+
+//Documentação requisitos
+ 1 Uma breve descrição do que trata o projeto
+  2 Pré-requisitos (tais como Node.js, npm, git, etc.)
+    3 Passos para instalação das dependências
+      4 Passos para rodar os testes
+        5 Qualquer outra informação que for pertinente
