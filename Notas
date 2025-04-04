@@ -72,3 +72,11 @@ cy.get('@textField') --> chamo o get aqui de novo usando @nome do alias @textfie
     3 Passos para instalação das dependências
       4 Passos para rodar os testes
         5 Qualquer outra informação que for pertinente
+
+
+
+//Integração Contínua (CI) com GitHub Actions
+Com o git, adicione todas suas alterações à área de staging (git add .).
+Faça um commit com a mensagem Configure the ci workflow (git commit -m "Configure the ci workflow".)
+Envie suas alterações locais para seu fork remoto no GitHub (git push origin main.)
+Acesse o GitHub e veja suas alterações disparando o workflow (e se tudo der certo, veja seus testes passando).
