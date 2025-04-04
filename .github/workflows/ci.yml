@@ -1,4 +1,5 @@
 name: End-to-end tests
+run: npm install
 on: push
 jobs:
   cypress-run:
