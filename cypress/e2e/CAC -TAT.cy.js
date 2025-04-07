@@ -50,6 +50,7 @@ describe('Exercicios cypress', () => {
   
   //Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida
   it('EXERCICIO EXTRA 2 -> mensagem de erro ao submeter o formulário com um email com formatação inválida ', () => {
+    
     cy.get('#firstName').click().type('Leonardo')
     cy.get('#lastName').click().type('Oliveira')
     cy.get('#email').click().type('teste@123,com')
@@ -67,6 +68,7 @@ describe('Exercicios cypress', () => {
 
 //Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário
   it('EXERCICIO EXTRA 4', () => {
+
     cy.get('#firstName').click().type('Leonardo')
     cy.get('#lastName').click().type('Oliveira')
     cy.get('#email').click().type('teste@123.com')
@@ -242,6 +244,9 @@ describe('Exercicios cypress', () => {
 
   //Exercício extra
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário ', () => {
+
+    cy.clock()
+
     cy.get('#firstName').click().type('Leonardo')
     cy.get('#lastName').click().type('Oliveira')
     cy.get('#email').click().type('teste@123,com')
@@ -250,6 +255,10 @@ describe('Exercicios cypress', () => {
     cy.get('#open-text-area').type('Teste')
     cy.contains('button','Enviar').click()
     cy.get('.error').should('be.visible')
+
+    cy.tick(3000)
+
+    cy.get('.error').should('not.be.visible')
   })
 
 ////////////////Fazendo upload de arquivos com Cypress
@@ -324,6 +333,76 @@ describe('Exercicios cypress', () => {
 
 ////////////Simulando o viewport de um dispositivo móvel
 //cypress open --config viewportWidth=370 viewportHeight=660
+
+
+//////////Controle o "relógio" 🕐 do navegador com os comandos cy.clock() e cy.tick()
+// Com a funcinalidade cy.clock(), você pode "congelar" 🧊 o relógio do navegador.
+
+// E com a funcionalidade cy.tick(), você pode avançar no tempo. 🕒
+
+
+
+// Cypress._.times() --> executa uma função de callback um certo número de vezes, onde o número de veses é o primeiro argumento
+//e a função callback o segundo
+
+it('Exercicio extra função Cypress._.times() ', () => {
+      //cy.clock()
+
+      const longText = Cypress._.repeat('abcdefghijklmnopqrstuvxyzw', 10 )
+
+      cy.get('#firstName').click().type('Leonardo')
+      cy.get('#lastName').click().type('Oliveira')
+      cy.get('#email').click().type('teste@123.com')
+      cy.get('#open-text-area').type(longText, { delay: 0 })
+      cy.contains('button','Enviar').click()
+
+      cy.get('.success').should('be.visible')
+
+      cy.tick(3000)
+
+      cy.get('.success').should('not.be.visible')
+    })
+
+///LODASH
+
+Cypress._.times(3, () => { //--> Executa uma funçção de callback um número de vezes onde o número de vezes é o primeiro argumento e a função callback o segundo
+  console.log('Olá Cypress!')
+}) //Isso registrará 'Olá Cypress!' três vezes no console.
+
+Cypress._.repeat() // --> a funcionalidade serve para repetir uma string certo número de vezes, onde o primeiro argumetno é a string 
+//a qual deseja repetir, e o segundo argumento é quatas vezes a string deve ser repetida
+const repeatedText = Cypress._.repeat('lorem ipsum, ', 3)
+
+console.log(repeatedText) // Isso registrará 'lorem ipsum, lorem ipsum, lorem ipsum, ' no console.
+
+it('preenche o campo da área de texto usando o comando invoke', () => {
+  cy.get('.success')
+    .should('not.be.visible')
+    .invoke('show')// você pode forçar a exibição de um elemento HTML que está oculto, com display: none;
+    .should('be.visible')
+    .and('contain', 'Mensagem enviada com sucesso.')
+    .invoke('hide')//você pode ocultar um elemento que está sendo exibido.
+    .should('not.be.visible')
+  cy.get('.error')
+    .should('not.be.visible')
+    .invoke('show')
+    .should('be.visible')
+    .and('contain', 'Valide os campos obrigatórios!')
+    .invoke('hide')
+    .should('not.be.visible')
+})
+// Exercício extra 3 com uso do .invoke()
+it('Exercício extra 3 de invoke', () => {
+  cy.get('#open-text-area')
+    .invoke('val', 'um texto qualquer')// digitou o texto estantaneo não 1 de cada vez
+    .should('have.value', 'um texto qualquer')
+})
+
+//CY.REQUEST()
+it('', () => {
+
+  
 })
 
 
+})
