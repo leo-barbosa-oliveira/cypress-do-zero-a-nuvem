@@ -346,7 +346,7 @@ describe('Exercicios cypress', () => {
 //e a função callback o segundo
 
 it('Exercicio extra função Cypress._.times() ', () => {
-      //cy.clock()
+  cy.clock()
 
       const longText = Cypress._.repeat('abcdefghijklmnopqrstuvxyzw', 10 )
 
@@ -361,19 +361,20 @@ it('Exercicio extra função Cypress._.times() ', () => {
       cy.tick(3000)
 
       cy.get('.success').should('not.be.visible')
-    })
 
+})
+      
 ///LODASH
 
-Cypress._.times(3, () => { //--> Executa uma funçção de callback um número de vezes onde o número de vezes é o primeiro argumento e a função callback o segundo
-  console.log('Olá Cypress!')
-}) //Isso registrará 'Olá Cypress!' três vezes no console.
+// Cypress._.times(3, () => { //--> Executa uma funçção de callback um número de vezes onde o número de vezes é o primeiro argumento e a função callback o segundo
+//   console.log('Olá Cypress!')
+// }) //Isso registrará 'Olá Cypress!' três vezes no console.
 
-Cypress._.repeat() // --> a funcionalidade serve para repetir uma string certo número de vezes, onde o primeiro argumetno é a string 
-//a qual deseja repetir, e o segundo argumento é quatas vezes a string deve ser repetida
-const repeatedText = Cypress._.repeat('lorem ipsum, ', 3)
+// Cypress._.repeat() // --> a funcionalidade serve para repetir uma string certo número de vezes, onde o primeiro argumetno é a string 
+// //a qual deseja repetir, e o segundo argumento é quatas vezes a string deve ser repetida
+// const repeatedText = Cypress._.repeat('lorem ipsum, ', 3)
 
-console.log(repeatedText) // Isso registrará 'lorem ipsum, lorem ipsum, lorem ipsum, ' no console.
+// console.log(repeatedText) // Isso registrará 'lorem ipsum, lorem ipsum, lorem ipsum, ' no console.
 
 it('preenche o campo da área de texto usando o comando invoke', () => {
   cy.get('.success')
@@ -390,7 +391,7 @@ it('preenche o campo da área de texto usando o comando invoke', () => {
     .and('contain', 'Valide os campos obrigatórios!')
     .invoke('hide')
     .should('not.be.visible')
-})
+  })
 // Exercício extra 3 com uso do .invoke()
 it('Exercício extra 3 de invoke', () => {
   cy.get('#open-text-area')
@@ -398,11 +399,18 @@ it('Exercício extra 3 de invoke', () => {
     .should('have.value', 'um texto qualquer')
 })
 
-//CY.REQUEST()
-it('', () => {
-
-  
+//cy.request()  --> esecuta requisições HTTP a nivel de rede, o que economiza tempo na configuração de teste e foca no que importar 
+//exercicio 4
+it('faz uma requisição HTTP', () => {
+  cy.request('https://cac-tat-v3.s3.eu-central-1.amazonaws.com/index.html')
+    .as('getRequest')
+    .its('status')//.its() pega uma propriedade de um sujeito
+    .should('be.equal' , 200)
+  cy.get('@getRequest')
+    .its('statusText')
+    .should('be.equal', 'OK')
+  cy.get('@getRequest')
+    .its('body')
+    .should('include', 'CAC TAT')
 })
-
-
 })
